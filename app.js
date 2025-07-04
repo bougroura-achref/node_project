@@ -80,6 +80,26 @@ app.post("/user/add.html", (req, res) => {
     });
 });
 
+
+// Search
+app.post("/search", (req, res) => {
+   console.log(req.body.textsearch);
+
+  const search = req.body.textsearch.trim();
+  
+  User.find({ $or: [{fireName: search}, {lastName: search}
+] })
+
+    .then((result) => {
+      console.log(result);
+      res.render("user/search", { arr: result, moment: moment });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}); 
+
+
 // DELETE Request
 app.delete("/edit/:id", (req, res) => {
   User.deleteOne({_id: req.params.id})
@@ -91,6 +111,22 @@ app.delete("/edit/:id", (req, res) => {
       console.log(err);
     });
 });
+
+
+// PUT Request
+app.put("/edit/:id", (req, res) => {
+// User.findByIdAndUpdate(req.params.id, req.body)
+  User.updateOne({_id : req.params.id}, req.body)
+    .then((result) => {
+      console.log(result);
+      res.redirect("/");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}); 
+
+
 
 mongoose
   .connect(

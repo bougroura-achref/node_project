@@ -52,11 +52,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>test1</td>
-              <td>test2</td>
-              <td>@test3</td>
+            <% arr.forEach((obj,index)=> { %>
+             <tr>
+
+              <th scope="row"><%= index+1 %></th>
+              <td><%= obj.fireName %> <%= obj.lastName %></td>
+              <td><%= obj.gender %></td>
+              <td><%= obj.country %></td>
 
               <td>
                 <a
@@ -64,7 +66,7 @@
                   data-bs-title="View details"
                   data-bs-placement="top"
                   class="btn btn-primary btn-sm"
-                  href="./user/view.html"
+                  href="/view/<%= obj._id %>"
                   ><i class="bi bi-eye"></i
                 ></a>
 
@@ -73,20 +75,29 @@
                   data-bs-title="Edit user"
                   data-bs-placement="top"
                   class="btn btn-primary btn-sm"
-                  href="./user/edit.html"
+                  href="/edit/<%= obj._id %>"
                 >
                   <i class="bi bi-pencil"></i>
                 </a>
-                <button
-                  data-bs-toggle="tooltip"
-                  data-bs-title="Delete user"
-                  data-bs-placement="top"
-                  class="btn btn-danger btn-sm"
+               <form
+                style="display: inline;"
+                  action="/edit/<%= obj._id %>?_method=DELETE"
+                  method="post"
                 >
-                  <i class="bi bi-trash"></i>
-                </button>
+                  <button
+                    data-bs-toggle="tooltip"
+                    data-bs-title="Delete user"
+                    data-bs-placement="top"
+                    class="btn btn-danger btn-sm"
+                  >
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </form>
               </td>
             </tr>
+            <% }) %>
+            
+
           </tbody>
         </table>
       </section>
